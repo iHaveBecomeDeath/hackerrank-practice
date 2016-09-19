@@ -9,13 +9,13 @@ class Solution {
         string[] bob = Console.ReadLine().Split(' ');
         var a = 0;
         var b = 0;
-        for (var i = 0; i < 3; i++) {
+        for (var i = 0; i < alice.Count(); i++) {
             var curA = Convert.ToInt32(alice[i]);
             var curB = Convert.ToInt32(bob[i]);            
             if (curA > curB)
-                a += 1;
+                a++;
             else if (curA < curB)
-                b += 1;
+                b++;
         }
         Console.Write($"{a} {b}");
     }
