@@ -9,13 +9,14 @@ class Solution {
       var k = input[1] >= 1 ? input[1] <= 100000 ? input[1] : 100000 : 1;
       var q = input[2] >= 1 ? input[2] <= 500 ? input[2] : 500 : 1;
       var rotArray = Array.ConvertAll(Console.ReadLine().Split(' '), Int32.Parse);
-
-      for (var i = 0; i < k; i++){
-        var tmpArray = new int[n];
-        Array.Copy(rotArray, n-1, tmpArray, 0, 1);
-        Array.Copy(rotArray, 0, tmpArray, 1, n-1);
-        rotArray = tmpArray;
+      while (k > n){        
+        k-=n;
       }
+      var tmpArray = new int[n];
+      Array.Copy(rotArray, n-1, tmpArray, k-1, 1);
+      Array.Copy(rotArray, 0, tmpArray, k, n-k);
+      Array.Copy(rotArray, n-k, tmpArray, 0, k-1);
+      rotArray = tmpArray;
       
       for (var i = 0; i < q; i++){
         var index = Convert.ToInt32(Console.ReadLine());
