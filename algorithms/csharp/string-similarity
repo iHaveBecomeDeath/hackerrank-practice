@@ -4,29 +4,28 @@ using System.IO;
 using System.Linq;
 
 class Solution {
-  static int GetStringSimilaritySum (string a) {
-    return a.Select((t, i) => GetStringSimilarity(a, a.Substring(i))).Sum();
-  }
   
-  static int GetStringSimilarity (string original, string substring) {
-    if (string.Compare(original, 0, substring, 0, substring.Length, StringComparison.Ordinal) == 0)
-      return substring.Length;
-
-    var sim = 0;
-    for (var i = 0; i < substring.Length; i++){
-      if (string.Compare(original, i, substring, i, 1, StringComparison.Ordinal) == 0)
-        sim++;
-      else
-        break;
+  static int[] GetStringSimilarity (string s) {
+    var len = s.Length;
+    var z = new int[len];
+    for (int i = 0, left = 0, right = 0; i < len; ++i) {
+        if (i <= right)
+            z[i] = Math.Min(right - i + 1, z[i - left]);
+        while (i + z[i] < len && s[z[i]] == s[i + z[i]])
+            ++z[i];
+        if (i + z[i] - 1 > right){
+            left = i;
+            right = i + z[i] - 1;
+        }
     }
-    
-    return sim;
+    return z;
   }
 
+ 
   static void Main(String[] args) {
     var testCases = Convert.ToInt32(Console.ReadLine());
       for (var _t_i = 0; _t_i < testCases; _t_i++) {
-        Console.WriteLine(GetStringSimilaritySum(Console.ReadLine()));
+        Console.WriteLine(GetStringSimilarity(Console.ReadLine()).Sum());
       }
     }
 }
