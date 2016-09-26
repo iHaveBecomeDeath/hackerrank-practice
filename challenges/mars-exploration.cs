@@ -1,15 +1,17 @@
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
+
 class Solution {
   static void Main(String[] args) {
-    var s = Console.ReadLine();
-    var numberOfSOSes = s.Length / 3;
-    for (var i = 0; i < numberOfSOSes; i+=3)
-    var changedLetters = 
-      numberOfSOSes - s.Count(x => x == 'O')
-      + numberOfSOSes * 2 - s.Count(x => x == 'S');
+    const int sosLength = 3;
+    var s = Console.ReadLine().ToArray();
+    var changedLetters = 0;
+    for (var i = 0; i < s.Length; i+=sosLength) {
+      for (var j = 0; j < sosLength; j++){
+        var comparisonChar = j == 0 || j % 2 == 0 ? 'S' : 'O';
+        changedLetters += s[i+j] == comparisonChar ? 0 : 1;
+      }
+    }
     Console.WriteLine(changedLetters);
   }
 }
