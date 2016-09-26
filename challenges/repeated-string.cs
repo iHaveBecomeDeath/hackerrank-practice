@@ -1,29 +1,25 @@
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
 using System.Linq;
-class Solution {
 
-  static void Main(String[] args) {
-    var startingString = Console.ReadLine().ToArray();
-    var numberOfChars = Convert.ToInt64(Console.ReadLine());
-    if (startingString.Count(x => x == 'a') == startingString.Length){
-      Console.WriteLine(numberOfChars);
-    } else {
-      var arr = new char[numberOfChars];
-      long copyLength = startingString.Length;
-      long totalCopied = 0;
-      Array.Copy(startingString, arr, startingString.Length);
-      totalCopied = copyLength;
-      while (totalCopied < numberOfChars){        
-        copyLength = numberOfChars < copyLength + totalCopied
-          ? numberOfChars - totalCopied
-          : copyLength;
-        Array.Copy(arr, 0, arr, totalCopied, copyLength);
-        totalCopied += copyLength;
-      }
-      Console.WriteLine(arr.Count(x => x == 'a'));
+class Solution
+{
+    static void Main(String[] args)
+    {
+        var startingString = Console.ReadLine().ToArray();
+        var numberOfChars = Convert.ToInt64(Console.ReadLine());
+        var amountOfAs = startingString.Count(x => x == 'a');
+        var remainder = numberOfChars % startingString.Length;
+        if (remainder == 0)
+        {
+            Console.WriteLine(numberOfChars / startingString.Length * amountOfAs);
+        }
+        else
+        {
+            var resultWithWrongAmountOfAs = Math.Floor(((double)numberOfChars / startingString.Length)) * amountOfAs;
+            var correctResult = new string(startingString)
+              .Substring(0, Convert.ToInt32(remainder)).Count(x => x == 'a')
+              + resultWithWrongAmountOfAs;
+            Console.WriteLine(correctResult);
+        }
     }
-  }
-} 
+}
